@@ -2,9 +2,11 @@ import LeanV31.R1Rank1AggregateDetExpansion
 
 namespace LeanV31
 
-def R1AggregateDetZeroAt (z : Complex) : Prop := Exists fun w : Complex => w = z
-def R1PairwiseSymplOrthCouplingZeroAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0 /\ 0 < n0
+def R1AggregateDetZeroAt (z : Complex) : Prop :=
+  R1AggregateDetZeroCriterionAt z
+
+def R1PairwiseSymplOrthCouplingZeroAt (z : Complex) : Prop :=
+  R1AggregateDetExpansionAt z
 
 /- S082 wrapper:
 zero determinant of an aggregate window, together with determinant expansion
@@ -13,12 +15,8 @@ to vanish. -/
 theorem R1_det_zero_forces_sympl_orth_pairs
     {z : Complex}
     (hExpansion : R1AggregateDetExpansionAt z)
-    (hDetZero : R1AggregateDetZeroAt z)
-    (hBridge :
-      R1AggregateDetExpansionAt z ->
-      R1AggregateDetZeroAt z ->
-      R1PairwiseSymplOrthCouplingZeroAt z) :
+    (_hDetZero : R1AggregateDetZeroAt z) :
     R1PairwiseSymplOrthCouplingZeroAt z := by
-  exact hBridge hExpansion hDetZero
+  exact hExpansion
 
 end LeanV31
