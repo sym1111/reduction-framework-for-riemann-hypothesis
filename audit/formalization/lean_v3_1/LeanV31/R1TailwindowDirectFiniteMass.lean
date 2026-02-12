@@ -2,8 +2,12 @@ import LeanV31.R1BoundedKjImpliesFiniteMass
 
 namespace LeanV31
 
-def R1PrefixWindowDirectBoundAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
-def R1FiniteTotalMassFromPrefixWindowAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+def R1PrefixWindowDirectBoundAt (_z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall N : Nat, R1PrefixTraceMassAt N <= C
+
+def R1FiniteTotalMassFromPrefixWindowAt (z : Complex) : Prop :=
+  R1FiniteTotalMassAt z
 
 /- S067 wrapper:
 a uniform prefix-window bound along an infinite subsequence directly bounds all

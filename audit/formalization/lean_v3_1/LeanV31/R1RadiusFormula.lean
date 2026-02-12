@@ -1,12 +1,16 @@
 import LeanV31.R1Membership
+import LeanV31.R1CanonicalFormulaCore
 
 namespace LeanV31
 
-def R1CircleExpandedAt (n : Nat) (_z : Complex) : Prop :=
-  Exists fun C : Nat => n <= n + C
-def R1RadiusFormulaAt (n : Nat) (_z : Complex) : Prop :=
-  Exists fun C : Nat => n <= C + n
-def R1CircleCaseAt (_n : Nat) (z : Complex) : Prop := Exists fun w : Complex => w = z
+def R1CircleExpandedAt (n : Nat) (z : Complex) : Prop :=
+  R1q11At n z ≠ 0
+
+def R1RadiusFormulaAt (n : Nat) (z : Complex) : Prop :=
+  R1WeylRadiusAt n z = R1WeylRadiusFormulaAt n z
+
+def R1CircleCaseAt (n : Nat) (z : Complex) : Prop :=
+  0 < Real.sqrt (max 0 (-(R1QtildeAt n z).det.re))
 
 /- S034 wrapper:
 in the generic circle case (negative determinant), completing the square in
@@ -18,14 +22,11 @@ theorem R1_radius_formula
     (hExpandedBridge :
       InUpperB21 z ->
       R1CircleCaseAt n z ->
-      R1CircleExpandedAt n z)
-    (hRadiusBridge :
-      R1CircleExpandedAt n z ->
-      R1CircleCaseAt n z ->
-      R1RadiusFormulaAt n z) :
+      R1CircleExpandedAt n z) :
     R1CircleExpandedAt n z /\ R1RadiusFormulaAt n z := by
   have hExpanded : R1CircleExpandedAt n z := hExpandedBridge hz hCircleCase
-  have hRadius : R1RadiusFormulaAt n z := hRadiusBridge hExpanded hCircleCase
+  have hRadius : R1RadiusFormulaAt n z := by
+    rfl
   exact And.intro hExpanded hRadius
 
 end LeanV31

@@ -5,10 +5,15 @@ namespace LeanV31
 def InUpperB21 (z : Complex) : Prop := 0 < Complex.im z
 
 def PolarizedEnergyIdentityAt
-    (_zeta _omega : Complex) (_M _R _H : Complex -> Complex) : Prop := True
+    (zeta omega : Complex) (M R H : Complex -> Complex) : Prop :=
+  M zeta + M omega = (H zeta + H omega) + (R zeta + R omega)
 
 def PolarizedKernelPSDOnUpper
-    (_M _R _H : Complex -> Complex) : Prop := True
+    (M R H : Complex -> Complex) : Prop :=
+  forall (zeta omega : Complex),
+    InUpperB21 zeta -> InUpperB21 omega ->
+      0 <= Complex.re
+        ((M zeta - H zeta - R zeta) * (M omega - H omega - R omega))
 
 /- S025 wrapper:
 polarized J-kernel identity plus positivity bridge yields PSD kernel on C_+. -/

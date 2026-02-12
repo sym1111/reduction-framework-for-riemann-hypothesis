@@ -2,8 +2,16 @@ import LeanV31.R1LimitCircleImpliesFiniteMass
 
 namespace LeanV31
 
-def R1CS2TailBoundAt (_z : Complex) : Prop := Exists fun t0 : Nat => 0 < t0
-def R1CS2SingularValueCharacterAt (_z : Complex) : Prop := Exists fun C : Real => 0 <= C
+def R1CS2TailBoundAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall n : Nat, R1RadiusSequenceAt n z <= C
+
+def R1CS2SingularValueCharacterAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      forall n : Nat,
+        Complex.normSq (R1QtildeAt n z 0 0) +
+          Complex.normSq (R1QtildeAt n z 1 1) <= C
 
 /- S046 wrapper:
 using determinant-one cocycle structure, CS2 is equivalent to the tail-cocycle

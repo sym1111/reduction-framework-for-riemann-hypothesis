@@ -3,12 +3,17 @@ import LeanV31.R1CS2Equiv
 
 namespace LeanV31
 
-def R1StructuredTailWindowBoundAt (_z : Complex) : Prop :=
-  Exists fun C : Real => 0 <= C
-def R1WindowSymplecticOrthAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
-def R1CS2StructuredTailBoundAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0
-def R1CS2StructuredBoundAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
+def R1StructuredTailWindowBoundAt (z : Complex) : Prop :=
+  R1TailWindowBoundAt z
+
+def R1WindowSymplecticOrthAt (z : Complex) : Prop :=
+  forall p q : Nat, R1SymplecticOrthogonalityAt p q z
+
+def R1CS2StructuredTailBoundAt (z : Complex) : Prop :=
+  R1CS2TailBoundAt z
+
+def R1CS2StructuredBoundAt (z : Complex) : Prop :=
+  R1CS2ConditionAt z
 
 /- S072 wrapper:
 under structured tail-window and window-level symplectic orthogonality, linear

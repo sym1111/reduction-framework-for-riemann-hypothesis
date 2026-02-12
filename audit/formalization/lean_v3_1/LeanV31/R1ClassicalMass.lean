@@ -12,11 +12,9 @@ target theorem: total trace-mass divergence enforces Weyl-radius collapse on
 the upper half-plane chain. -/
 theorem R1_classical_mass
     {z : Complex}
-    (hMassDiverges : R1TotalMassDivergesAt z)
-    (hClassicalBridge :
-      R1TotalMassDivergesAt z ->
-      R1ClassicalMassCriterionAt z) :
+    (hMassDiverges : R1TotalMassDivergesAt z) :
     R1ClassicalMassCriterionAt z := by
-  exact hClassicalBridge hMassDiverges
+  intro _hMass
+  exact R1_prefix_subsequence_divergence (z := z) hMassDiverges
 
 end LeanV31

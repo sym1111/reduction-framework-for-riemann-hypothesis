@@ -2,10 +2,15 @@ import LeanV31.R1TwoChannelTraceCompare
 
 namespace LeanV31
 
-def R1RankOneBlockAt (_k : Nat) (_z : Complex) : Prop :=
-  Exists fun v : Complex × Complex => v.1 != 0 \/ v.2 != 0
-def R1HJHZeroAt (k : Nat) (_z : Complex) : Prop := Exists fun n : Nat => n = k
-def R1TransportInvariantAt (k : Nat) (_z : Complex) : Prop := Exists fun n : Nat => n = k
+def R1RankOneBlockAt (k : Nat) (_z : Complex) : Prop :=
+  (R1HamiltonianBlockAt k).det = 0
+
+def R1HJHZeroAt (k : Nat) (_z : Complex) : Prop :=
+  R1HamiltonianBlockAt k * R1J * R1HamiltonianBlockAt k = 0
+
+def R1TransportInvariantAt (k : Nat) (z : Complex) : Prop :=
+  R1StepRAt k z * R1HamiltonianBlockAt k =
+    R1HamiltonianBlockAt k * R1StepLAt k z
 
 /- S044 wrapper:
 for rank-one PSD blocks, `H J H = 0`, and Cayley transport preserves the block:

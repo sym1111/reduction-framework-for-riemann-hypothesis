@@ -2,8 +2,11 @@ import LeanV31.R1ObstructionCertificate
 
 namespace LeanV31
 
-def R1BoundedBranchAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
-def R1DivergentBranchAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 < j0
+def R1BoundedBranchAt (z : Complex) : Prop :=
+  R1KjUniformBoundAt z /\ R1CS2ConditionAt z /\ R1TailWindowSubseqBoundAt z
+
+def R1DivergentBranchAt (z : Complex) : Prop :=
+  R1KjDivergesAt z /\ R1CS2FailsAt z /\ R1TailWindowFailsAt z
 
 /- S061 wrapper:
 for a rank-one radius-floor subsequence, exactly one branch occurs: bounded

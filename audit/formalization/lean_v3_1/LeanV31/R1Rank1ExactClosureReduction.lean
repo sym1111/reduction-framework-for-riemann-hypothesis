@@ -2,7 +2,8 @@ import LeanV31.R1CS2EquivKj
 
 namespace LeanV31
 
-def R1TailWindowSubseqBoundAt (_z : Complex) : Prop := Exists fun C : Real => 0 <= C
+def R1TailWindowSubseqBoundAt (_z : Complex) : Prop :=
+  forall k n : Nat, k <= n -> 0 <= R1PrefixTraceMassAt n - R1PrefixTraceMassAt k
 
 /- S059 wrapper:
 on a radius-floor rank-one subsequence, exact closure reduction identifies

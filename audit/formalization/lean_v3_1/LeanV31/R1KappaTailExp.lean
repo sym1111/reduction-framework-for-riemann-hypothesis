@@ -2,10 +2,13 @@ import LeanV31.R1CS2TailMassWindow
 
 namespace LeanV31
 
-def R1KappaTailExpPointwiseAt (k j : Nat) (_z : Complex) : Prop :=
-  Exists fun C : Nat => k <= C + j
+def R1KappaTailExpPointwiseAt (k j : Nat) (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      R1KappaGaugeAt k z <= C * Real.exp (R1PrefixTraceMassAt k - R1PrefixTraceMassAt j)
 def R1FiniteTotalMassForKappaAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0
+  Exists fun M : Real =>
+    0 <= M /\ forall N : Nat, R1PrefixTraceMassAt N <= M
 
 /- S053 wrapper:
 under tail-window/rank-one assumptions, frame growth `kappa_{k,j}` admits a

@@ -20,18 +20,7 @@ theorem r1_limit_point_available
     (hMassDiverges : forall z : Complex, R1TotalMassDivergesAt z)
     (hInternalCollapse : forall z : Complex, R1GlobalRadiusCollapseAt z)
     (hClassicalMass : forall z : Complex, R1ClassicalMassCriterionAt z)
-    (hApplicability : forall z : Complex, R1ClassicalMassApplicabilityAt z)
-    (hCollapseBridge :
-      forall z : Complex,
-        R1TotalMassDivergesAt z ->
-          R1GlobalRadiusCollapseAt z ->
-            R1ClassicalMassCriterionAt z ->
-              R1ClassicalMassApplicabilityAt z ->
-                R1LimitPointCollapseAt z)
-    (hUniqueBridge :
-      forall z : Complex,
-        R1LimitPointCollapseAt z ->
-          R1WeylLimitUniqueAt z) :
+    (hApplicability : forall z : Complex, R1ClassicalMassApplicabilityAt z) :
     R1LimitPointAvailable := by
   intro z
   exact R1_limit_point
@@ -39,8 +28,6 @@ theorem r1_limit_point_available
     (hInternalCollapse z)
     (hClassicalMass z)
     (hApplicability z)
-    (hCollapseBridge z)
-    (hUniqueBridge z)
 
 theorem limit_point_unique_limit_available
     (hFam :
@@ -121,17 +108,6 @@ theorem ID_assumptions_verified_from_wrappers
     (hInternalCollapse : forall z : Complex, R1GlobalRadiusCollapseAt z)
     (hClassicalMass : forall z : Complex, R1ClassicalMassCriterionAt z)
     (hApplicability : forall z : Complex, R1ClassicalMassApplicabilityAt z)
-    (hCollapseBridge :
-      forall z : Complex,
-        R1TotalMassDivergesAt z ->
-          R1GlobalRadiusCollapseAt z ->
-            R1ClassicalMassCriterionAt z ->
-              R1ClassicalMassApplicabilityAt z ->
-                R1LimitPointCollapseAt z)
-    (hUniqueBridgeR1 :
-      forall z : Complex,
-        R1LimitPointCollapseAt z ->
-          R1WeylLimitUniqueAt z)
     (hFam :
       forall m : Nat -> Complex -> Complex, TruncationWeylHerglotzFamily m)
     (hRadiusCollapse :
@@ -172,8 +148,6 @@ theorem ID_assumptions_verified_from_wrappers
       hInternalCollapse
       hClassicalMass
       hApplicability
-      hCollapseBridge
-      hUniqueBridgeR1
   have hLimit : LimitPointUniqueLimitAvailable :=
     limit_point_unique_limit_available
       hFam

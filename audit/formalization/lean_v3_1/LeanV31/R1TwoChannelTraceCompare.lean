@@ -2,8 +2,13 @@ import LeanV31.R1LagrangeIdentityGlobal
 
 namespace LeanV31
 
-def R1TwoChannelFrameAt (k j : Nat) (_z : Complex) : Prop := Exists fun n : Nat => n = k \/ n = j
-def R1TwoChannelTraceCompareAt (k j : Nat) (_z : Complex) : Prop := Exists fun n : Nat => n = k \/ n = j
+def R1TwoChannelFrameAt (k j : Nat) (z : Complex) : Prop :=
+  0 <= Complex.normSq (R1QtildeAt k z 0 0) +
+    Complex.normSq (R1QtildeAt j z 1 1)
+
+def R1TwoChannelTraceCompareAt (k j : Nat) (z : Complex) : Prop :=
+  R1PrefixTraceMassAt (Nat.max k j) <=
+    R1KappaGaugeAt k z + R1KappaGaugeAt j z
 
 /- S043 wrapper:
 for an invertible two-channel frame, trace of a PSD block is controlled by the

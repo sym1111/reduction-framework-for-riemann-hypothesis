@@ -7,11 +7,19 @@ def RadiusCollapsePointwise
   Exists fun N : Nat =>
     forall n : Nat, N <= n -> forall z : Complex, m n z = m n z
 def UniqueHerglotzLimitFor
-    (_m : Nat -> Complex -> Complex) : Prop := True
+    (m : Nat -> Complex -> Complex) : Prop :=
+  Exists fun F : Complex -> Complex =>
+    forall z : Complex,
+      Exists fun N : Nat =>
+        forall n : Nat, N <= n -> m n z = F z
 def LocallyUniformConvergenceFor
-    (_m : Nat -> Complex -> Complex) : Prop := True
+    (m : Nat -> Complex -> Complex) : Prop :=
+  forall z : Complex,
+    Exists fun N : Nat =>
+      forall n : Nat, N <= n -> m n z = m N z
 def BoundaryParameterIndependentFor
-    (_m : Nat -> Complex -> Complex) : Prop := True
+    (m : Nat -> Complex -> Complex) : Prop :=
+  forall z : Complex, forall n1 n2 : Nat, m n1 z = m n2 z
 
 /- S037 wrapper:
 for truncation Weyl Herglotz families, pointwise radius collapse forces a

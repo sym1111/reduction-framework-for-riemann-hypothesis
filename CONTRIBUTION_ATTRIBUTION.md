@@ -1,51 +1,49 @@
-﻿# Contribution and Attribution Policy (Public Release)
+# Contribution and Attribution Policy
 
-This repository is a public release bundle for RH v3.1.
-
-## 1. Scope of this public repository
-
-This repository publishes:
-- Manuscript source and PDF for v3.1.
-- Lean formalization sources under `audit/formalization/lean_v3_1/`.
-- Selected audit summaries for dependency and consistency tracking.
-
-This repository does not publish private process logs, internal meta-workflow notes, or legacy archive branches.
-
-## 2. Commit identity
-
-Author signature used for commits in this project:
+Author signature for repository commits:
 - Name: `Youngmin Shin`
 - Email: `tlsdudals1994@gmail.com`
 
-## 3. What is claimed as contribution here
+요약(한국어):
+- 이 저장소의 커밋 작성자는 `Youngmin Shin`으로 고정한다.
+- 본 저장소는 "내가 새로 구성/정식화한 부분"과 "외부 기존 정리"를 구분해 표기한다.
+- 외부 기존 정리는 반드시 인용하고, 최초 발견처럼 주장하지 않는다.
 
-Claimed contribution in this repository includes:
-- The reduction architecture and manuscript organization for RH v3.1.
-- The formalization workflow and machine-checkable Lean code in this public bundle.
-- The reproducible build setup (`lean-toolchain`, `lakefile.toml`, CI workflow).
+## 1. What is claimed as this project's contribution
 
-## 4. What is NOT claimed as original discovery
+The project claims contribution for:
+- The reduction architecture and manuscript organization in this repository.
+- The formalization workflow, scripts, and audit process.
+- The machine-checked formalization units explicitly marked as `formalized` in
+  `audit/formalization/v3.1_statement_formalization_inventory.csv`.
 
-This repository does not claim original discovery for:
-- Classical theorems and standard results cited from prior literature.
-- Lean `mathlib` results and foundational theorems from the proof assistant ecosystem.
-- External papers used as dependencies in the manuscript.
+Current core formalization contributions include:
+- `S138`, `S139`, `S140`, `S141`, `S142`, `S143`, `S145`, `S146`.
 
-## 5. Attribution rule
+## 2. What is NOT claimed as original discovery
 
-For each external theorem/result used:
-- Keep explicit citation in the manuscript (`A_Reduction_Framework_RH_v3.1.tex`).
-- Keep dependency context in the audit summaries when relevant.
-- Do not present prior known results as first proved in this repository.
+The project does **not** claim original discovery for:
+- Pre-existing theorems and classical results used as tools.
+- Lean `mathlib` library theorems and Coq/Lean ecosystem foundations.
+- External papers and known equivalences cited in the manuscript.
 
-## 6. Public wording template
+## 3. Attribution rule
 
-Suggested wording for release notes and metadata:
+For every external theorem/result:
+- Keep explicit citation in manuscript (`.tex` references).
+- Mark it as an external dependency when relevant in audit files.
+- Do not rephrase external known results as if they were first proved here.
 
-"This repository contains the RH v3.1 manuscript and a Lean formalization snapshot with explicit attribution to prior literature and library dependencies."
+## 4. Safe public wording template
 
-## 7. Scope boundary
+Recommended wording for README/release notes:
+- "This repository contains my formalization workflow and verified wrappers for
+  selected statements in the RH reduction manuscript. Classical results and
+  library theorems are used with attribution and are not claimed as original
+  discoveries by this repository."
 
-- Commit authorship identifies who recorded changes.
-- Scholarly novelty is evaluated by distinction between new construction and cited prior work.
-- These two should be kept separate in public descriptions and reviews.
+## 5. Scope boundary (practical)
+
+- `Commit author` proves who recorded code changes.
+- `Scholarly novelty` depends on what is genuinely new versus cited prior work.
+- Always separate these two concepts in public descriptions.

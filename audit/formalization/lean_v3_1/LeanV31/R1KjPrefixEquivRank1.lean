@@ -2,8 +2,13 @@ import LeanV31.R1KappaPointwiseTailExp
 
 namespace LeanV31
 
-def R1PrefixMassUniformBoundAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
-def R1KjUniformBoundAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+def R1PrefixMassUniformBoundAt (_z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall j : Nat, R1PrefixTraceMassAt j <= C
+
+def R1KjUniformBoundAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall j : Nat, R1KappaGaugeAt j z <= C
 
 /- S057 wrapper:
 on a radius-floor rank-one subsequence, lower/upper kappa controls from prefix

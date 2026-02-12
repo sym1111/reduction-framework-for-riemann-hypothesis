@@ -2,8 +2,11 @@ import LeanV31.R1Rank1StepLinear
 
 namespace LeanV31
 
-def R1Rank1MixedFactorAt (p _q : Nat) (_z : Complex) : Prop := Exists fun r : Nat => r = p
-def R1SymplecticOrthogonalityAt (p q : Nat) (_z : Complex) : Prop := Exists fun r : Nat => r = p \/ r = q
+def R1Rank1MixedFactorAt (p q : Nat) (_z : Complex) : Prop :=
+  (R1J * R1HamiltonianBlockAt p * (R1J * R1HamiltonianBlockAt q)).det = 0
+
+def R1SymplecticOrthogonalityAt (p q : Nat) (_z : Complex) : Prop :=
+  R1HamiltonianBlockAt p * R1J * R1HamiltonianBlockAt q = 0
 
 /- S050 wrapper:
 for rank-one factors, mixed products `JH_a JH_b` reduce to a scalar symplectic

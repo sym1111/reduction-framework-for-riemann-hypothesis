@@ -3,12 +3,26 @@ import LeanV31.R1TwoChannelTraceCompare
 
 namespace LeanV31
 
-def R1RadiusFloorSubsequenceAt (_z : Complex) : Prop :=
-  Exists fun u : Nat -> Nat => StrictMono u
-def R1TwoChannelEnergyWindowAt (j : Nat) (_z : Complex) : Prop :=
-  Exists fun C : Nat => j <= C + j
-def R1PrefixTraceKappaBottleneckAt (j : Nat) (_z : Complex) : Prop := Exists fun C : Nat => j <= C
-def R1FrameGrowthDivergenceAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+def R1RadiusFloorSubsequenceAt (z : Complex) : Prop :=
+  Exists fun u : Nat -> Nat =>
+    StrictMono u /\
+      Exists fun r0 : Real =>
+        0 < r0 /\ forall n : Nat, r0 <= R1RadiusSequenceAt (u n) z
+
+def R1TwoChannelEnergyWindowAt (j : Nat) (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      forall n : Nat,
+        j <= n ->
+          Complex.normSq (R1QtildeAt n z 0 0) +
+            Complex.normSq (R1QtildeAt n z 1 1) <= C
+
+def R1PrefixTraceKappaBottleneckAt (j : Nat) (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ R1PrefixTraceMassAt j <= C + R1KappaGaugeAt j z
+
+def R1FrameGrowthDivergenceAt (z : Complex) : Prop :=
+  forall M : Real, Exists fun j : Nat => M <= R1KappaGaugeAt j z
 
 /- S054 wrapper:
 on a radius-floor subsequence, two-channel energy bounds and channel-trace

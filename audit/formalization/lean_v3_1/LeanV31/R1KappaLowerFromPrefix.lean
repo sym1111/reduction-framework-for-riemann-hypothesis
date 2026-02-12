@@ -2,7 +2,9 @@ import LeanV31.R1RadiusfloorKappaBottleneck
 
 namespace LeanV31
 
-def R1KappaLowerFromPrefixAt (j : Nat) (_z : Complex) : Prop := Exists fun C : Nat => j <= C + j
+def R1KappaLowerFromPrefixAt (j : Nat) (z : Complex) : Prop :=
+  Exists fun c : Real =>
+    0 <= c /\ c + R1PrefixTraceMassAt j <= R1KappaGaugeAt j z
 
 /- S055 wrapper:
 rearranging the prefix-trace bottleneck yields a quantitative lower bound on

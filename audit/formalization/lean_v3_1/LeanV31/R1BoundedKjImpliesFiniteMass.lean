@@ -3,9 +3,12 @@ import LeanV31.R1RadiusfloorKappaBottleneck
 
 namespace LeanV31
 
-def R1KjUniformBoundOnSubseqAt (_z : Complex) : Prop := Exists fun C : Real => 0 <= C
-def R1FiniteTotalMassByBoundedKjAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0 /\ 0 < n0
+def R1KjUniformBoundOnSubseqAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall j : Nat, R1KappaGaugeAt j z <= C
+
+def R1FiniteTotalMassByBoundedKjAt (z : Complex) : Prop :=
+  R1FiniteTotalMassAt z
 
 /- S066 wrapper:
 on a radius-floor subsequence, combining the prefix-trace/kappa bottleneck with

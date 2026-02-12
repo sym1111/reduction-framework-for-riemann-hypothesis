@@ -7,7 +7,7 @@ namespace LeanV31
 
 def R1UniformSPDFloorOnWindowsAt (_z : Complex) : Prop :=
   Exists fun c : Real => 0 < c
-def R1CS2SpdFloorAt (_z : Complex) : Prop := Exists fun n0 : Nat => 0 <= n0
+def R1CS2SpdFloorAt (z : Complex) : Prop := R1CS2ConditionAt z
 
 /- S093 wrapper:
 uniform SPD lower bounds on window matrices combine with radius-floor channel

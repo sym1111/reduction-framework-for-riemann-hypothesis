@@ -1,11 +1,20 @@
 import LeanV31.R1TailwindowPrefixEquiv
+import LeanV31.R1CanonicalFormulaCore
 
 namespace LeanV31
 
 def R1RadiusFloorTargetSubsequenceAt (_z : Complex) : Prop :=
-  Exists fun u : Nat -> Nat => StrictMono u
-def R1ClassicalMassApplicabilityAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
-def R1RadiusfloorClosurePrefixBoundAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+  Exists fun u : Nat -> Nat =>
+    StrictMono u /\
+      Exists fun r0 : Real =>
+        0 < r0 /\ forall n : Nat, r0 <= R1RadiusSequenceAt (u n) _z
+
+def R1ClassicalMassApplicabilityAt (z : Complex) : Prop :=
+  forall n : Nat, 0 <= R1WeylRadiusAt n z
+
+def R1RadiusfloorClosurePrefixBoundAt (_z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall n : Nat, R1RadiusSequenceAt n _z <= C
 
 /- S085 wrapper:
 on a radius-floor subsequence, classical mass-divergence applicability yields

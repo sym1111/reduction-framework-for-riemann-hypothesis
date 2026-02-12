@@ -3,8 +3,14 @@ import LeanV31.R1PrefixSubsequenceDivergence
 
 namespace LeanV31
 
-def R1SubseqPrefixWindowPrincipleAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
-def R1RadiusCollapseFromPrefixPrincipleAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+def R1SubseqPrefixWindowPrincipleAt (_z : Complex) : Prop :=
+  forall u : Nat -> Nat, StrictMono u ->
+    Exists fun C : Real =>
+      0 <= C /\ forall N : Nat, R1PrefixTraceMassAt (u N) <= C
+
+def R1RadiusCollapseFromPrefixPrincipleAt (z : Complex) : Prop :=
+  Exists fun j0 : Nat =>
+    forall n : Nat, j0 <= n -> R1RadiusSequenceAt n z = 0
 
 /- S069 wrapper:
 if total mass diverges but every radius-floor subsequence satisfies a

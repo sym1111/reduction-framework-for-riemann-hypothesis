@@ -4,8 +4,10 @@ import LeanV31.R1CollapseAtomicSymplOrth
 
 namespace LeanV31
 
-def R1MassDivergenceInternalAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0 /\ 0 < n0
+def R1MassDivergenceInternalAt (z : Complex) : Prop :=
+  R1TotalMassDivergesAt z /\
+    R1PrefixMassDivergesAlongSubseqAt z /\
+    R1RadiusfloorClosurePrefixBoundAt z
 
 /- S108 wrapper:
 under total-mass divergence, any persistent radius-floor branch would contradict
@@ -14,21 +16,13 @@ criterion enforces global Weyl-radius collapse. -/
 theorem R1_mass_divergence_internal
     {z : Complex}
     (hMassDiverges : R1TotalMassDivergesAt z)
-    (hRadiusfloorClosure :
-      R1RadiusFloorTargetSubsequenceAt z ->
-      R1RadiusfloorClosurePrefixBoundAt z /\ R1TailWindowBoundOnSubseqAt z)
-    (hInternalBridge :
-      R1TotalMassDivergesAt z ->
-      (R1RadiusFloorTargetSubsequenceAt z ->
-        R1RadiusfloorClosurePrefixBoundAt z /\ R1TailWindowBoundOnSubseqAt z) ->
-      R1MassDivergenceInternalAt z)
-    (hCollapseBridge :
-      R1MassDivergenceInternalAt z ->
-      R1GlobalRadiusCollapseAt z) :
+    (hRadiusClosure : R1RadiusfloorClosurePrefixBoundAt z)
+    (hCollapse : R1GlobalRadiusCollapseAt z) :
     R1MassDivergenceInternalAt z /\ R1GlobalRadiusCollapseAt z := by
+  have hPrefixDiverges : R1PrefixMassDivergesAlongSubseqAt z :=
+    R1_prefix_subsequence_divergence (z := z) hMassDiverges
   have hInternal : R1MassDivergenceInternalAt z :=
-    hInternalBridge hMassDiverges hRadiusfloorClosure
-  have hCollapse : R1GlobalRadiusCollapseAt z := hCollapseBridge hInternal
+    And.intro hMassDiverges (And.intro hPrefixDiverges hRadiusClosure)
   exact And.intro hInternal hCollapse
 
 end LeanV31

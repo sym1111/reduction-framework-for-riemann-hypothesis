@@ -1,13 +1,29 @@
 import LeanV31.R1Rank1TransportInvariance
 import LeanV31.R1Det1
+import LeanV31.R1CanonicalFormulaCore
 
 namespace LeanV31
 
-def R1LimitCircleSubsequenceAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 < n0
-def R1CS2ConditionAt (_z : Complex) : Prop := Exists fun c0 : Nat => 0 <= c0
-def R1TwoChannelEnergyBoundAt (_z : Complex) : Prop := Exists fun C : Real => 0 <= C
-def R1FiniteTotalMassAt (_z : Complex) : Prop := Exists fun m0 : Nat => 0 <= m0 /\ 0 < m0
+def R1LimitCircleSubsequenceAt (z : Complex) : Prop :=
+  Exists fun u : Nat -> Nat =>
+    StrictMono u /\
+      Exists fun r0 : Real =>
+        0 < r0 /\ forall n : Nat, r0 <= R1RadiusSequenceAt (u n) z
+
+def R1CS2ConditionAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\ forall n : Nat, R1RadiusSequenceAt n z <= C
+
+def R1TwoChannelEnergyBoundAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      forall n : Nat,
+        Complex.normSq (R1QtildeAt n z 0 0) +
+          Complex.normSq (R1QtildeAt n z 1 1) <= C
+
+def R1FiniteTotalMassAt (_z : Complex) : Prop :=
+  Exists fun M : Real =>
+    0 <= M /\ forall N : Nat, R1PrefixTraceMassAt N <= M
 
 /- S045 wrapper:
 under a radius-floor limit-circle subsequence and CS2 frame control, transport

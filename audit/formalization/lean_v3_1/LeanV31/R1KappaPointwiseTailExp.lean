@@ -2,8 +2,12 @@ import LeanV31.R1KappaLowerFromPrefix
 
 namespace LeanV31
 
-def R1KappaPointwiseTailExpAt (k j : Nat) (_z : Complex) : Prop :=
-  Exists fun C : Real => 0 <= C /\ (k : Real) <= C + (j : Real)
+def R1KappaPointwiseTailExpAt (k j : Nat) (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      R1KappaGaugeAt k z <=
+        (C * Real.exp (R1PrefixTraceMassAt k - R1PrefixTraceMassAt j)) *
+          (R1KappaGaugeAt j z + 1)
 
 /- S056 wrapper:
 in the rank-one branch, step linearization converts tail products into

@@ -2,7 +2,11 @@ import LeanV31.R1TailwindowDirectFiniteMass
 
 namespace LeanV31
 
-def R1TailWindowBoundOnSubseqAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0 /\ 0 < j0
+def R1TailWindowBoundOnSubseqAt (_z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      forall k n : Nat,
+        k <= n -> R1PrefixTraceMassAt n - R1PrefixTraceMassAt k <= C
 
 /- S068 wrapper:
 for nonnegative trace increments, tail-window and prefix-window bounds on a

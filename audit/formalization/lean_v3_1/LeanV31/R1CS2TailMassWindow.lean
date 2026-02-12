@@ -4,7 +4,8 @@ import LeanV31.R1CS2Equiv
 namespace LeanV31
 
 def R1RankOneTailBranchAt (_z : Complex) : Prop :=
-  Exists fun u : Nat -> Nat => StrictMono u
+  Exists fun u : Nat -> Nat =>
+    StrictMono u /\ forall n : Nat, 0 <= R1HamiltonianTraceAt (u n)
 
 /- S052 wrapper:
 on the rank-one branch, a uniform tail-mass window bound gives a uniform

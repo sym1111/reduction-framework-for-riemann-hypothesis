@@ -3,9 +3,11 @@ import LeanV31.R1Rank1TransportInvariance
 
 namespace LeanV31
 
-def R1Rank1StepLinearAt (_k : Nat) (z : Complex) : Prop :=
-  Exists fun C : Real => 0 <= C /\ Complex.normSq z <= C
-def R1Rank1StepInverseLinearAt (k : Nat) (_z : Complex) : Prop := Exists fun n : Nat => n = k
+def R1Rank1StepLinearAt (k : Nat) (z : Complex) : Prop :=
+  R1StepMAt k z = (1 - SMul.smul z (R1J * R1HamiltonianBlockAt k))
+
+def R1Rank1StepInverseLinearAt (k : Nat) (z : Complex) : Prop :=
+  R1StepLAt k z * R1StepRAt k z = 1
 
 /- S049 wrapper:
 rank-one block structure (nilpotent `JH`) linearizes each one-step transfer:

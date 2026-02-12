@@ -3,7 +3,8 @@ import LeanV31.R1GeneralStepInverseBoundSector
 namespace LeanV31
 
 def R1TailWindowBoundAt (_z : Complex) : Prop :=
-  Exists fun C : Real => 0 <= C
+  Exists fun C : Real =>
+    0 <= C /\ forall n : Nat, R1PrefixTraceMassAt n <= C
 
 /- S048 wrapper:
 in the nonnegative-`Re(z^2)` sector, the tail-window trace bound controls the

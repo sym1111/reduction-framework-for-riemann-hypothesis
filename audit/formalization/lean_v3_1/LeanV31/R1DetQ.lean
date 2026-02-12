@@ -2,7 +2,8 @@ import LeanV31.R1Det1
 
 namespace LeanV31
 
-def R1CircleMatrixDetFixedAt (n : Nat) (_z : Complex) : Prop := Exists fun m : Nat => m <= n
+def R1CircleMatrixDetFixedAt (n : Nat) (z : Complex) : Prop :=
+  -(R1QtildeAt n z).det = (1 / 4 : Complex)
 
 /- S039 wrapper:
 unimodularity of truncation transfer matrices implies fixed determinant for the

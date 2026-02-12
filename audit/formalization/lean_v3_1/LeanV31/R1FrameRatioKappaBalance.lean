@@ -4,8 +4,11 @@ import LeanV31.R1RadiusfloorKappaBottleneck
 
 namespace LeanV31
 
-def R1FrameRatioKappaBalanceAt (_z : Complex) : Prop :=
-  Exists fun n0 : Nat => 0 <= n0 /\ 0 < n0
+def R1FrameRatioKappaBalanceAt (z : Complex) : Prop :=
+  Exists fun C : Real =>
+    0 <= C /\
+      forall n : Nat,
+        R1KappaGaugeAt n z <= C * (R1RadiusSequenceAt n z + 1)
 
 /- S094 wrapper:
 determinant-one transfer normalization and CS2 singular-value relations give a

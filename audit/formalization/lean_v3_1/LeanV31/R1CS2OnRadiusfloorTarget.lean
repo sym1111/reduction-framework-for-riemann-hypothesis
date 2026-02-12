@@ -3,7 +3,8 @@ import LeanV31.R1LimitCircleImpliesFiniteMass
 
 namespace LeanV31
 
-def R1CS2OnRadiusfloorTargetAt (_z : Complex) : Prop := Exists fun t0 : Nat => 0 <= t0 /\ 0 < t0
+def R1CS2OnRadiusfloorTargetAt (z : Complex) : Prop :=
+  R1RadiusFloorTargetSubsequenceAt z /\ R1CS2ConditionAt z
 
 /- S086 wrapper:
 radius-floor closure provides finite-total-mass control on the target
@@ -20,15 +21,12 @@ theorem R1_CS2_on_radiusfloor_target
     (hCS2FromFiniteMass :
       R1FiniteTotalMassAt z ->
       R1CS2ConditionAt z)
-    (hTargetBridge :
-      R1CS2ConditionAt z ->
-      R1CS2OnRadiusfloorTargetAt z) :
-    R1CS2OnRadiusfloorTargetAt z := by
+    : R1CS2OnRadiusfloorTargetAt z := by
   have hClosure :
       R1RadiusfloorClosurePrefixBoundAt z /\ R1TailWindowBoundOnSubseqAt z :=
     hRadiusfloorClosure hRadiusFloor
   have hFinite : R1FiniteTotalMassAt z := hFiniteFromClosure hClosure
   have hCS2 : R1CS2ConditionAt z := hCS2FromFiniteMass hFinite
-  exact hTargetBridge hCS2
+  exact And.intro hRadiusFloor hCS2
 
 end LeanV31

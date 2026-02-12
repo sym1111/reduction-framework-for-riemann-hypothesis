@@ -2,10 +2,17 @@ import LeanV31.R1Rank1ExactClosureReduction
 
 namespace LeanV31
 
-def R1PrefixMassDivergesAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 <= j0
-def R1KjDivergesAt (_z : Complex) : Prop := Exists fun j0 : Nat => 0 < j0
-def R1CS2FailsAt (_z : Complex) : Prop := Exists fun eps : Nat => 0 < eps
-def R1TailWindowFailsAt (_z : Complex) : Prop := Exists fun n0 : Nat => 0 <= n0
+def R1PrefixMassDivergesAt (_z : Complex) : Prop :=
+  forall M : Real, Exists fun N : Nat => M <= R1PrefixTraceMassAt N
+
+def R1KjDivergesAt (z : Complex) : Prop :=
+  ¬ R1KjUniformBoundAt z
+
+def R1CS2FailsAt (z : Complex) : Prop :=
+  ¬ R1CS2ConditionAt z
+
+def R1TailWindowFailsAt (z : Complex) : Prop :=
+  ¬ R1TailWindowSubseqBoundAt z
 
 /- S060 wrapper:
 on a radius-floor subsequence, diverging prefix mass forces diverging `K_j`,
