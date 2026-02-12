@@ -1,0 +1,54 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.xdv
+
+# Lean / Lake build outputs
+**/.lake/
+**/.lean/
+**/build/
+*.olean
+*.ilean
+*.trace
+
+# Coq build artifacts
+*.vo
+*.vok
+*.vos
+*.glob
+*.aux
+
+# Python / tooling
+__pycache__/
+*.pyc
+
+# Local generated reports/cache (keep source scripts and markdown/csv outputs)
+audit/proof_keyword_hits_raw.txt
+
+# Public-release policy: keep external-facing subset only
+archive/
+notes/
+data/
+formal_checks/
+tools/
+release/
+A_Reduction_Framework_RH_v2.*
+A_Reduction_Framework_RH_v3.0.*
+A_Reduction_Framework_RH_v3.1_pdf.txt
