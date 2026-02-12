@@ -6,6 +6,7 @@ This repository is the sanitized public bundle for RH v3.1.
 
 - `A_Reduction_Framework_RH_v3.1.tex` (active manuscript source)
 - `A_Reduction_Framework_RH_v3.1.pdf` (compiled manuscript)
+- `README.md`
 - `CONTRIBUTION_ATTRIBUTION.md`
 - `WORKSPACE_MAP.md`
 
@@ -16,6 +17,7 @@ This repository is the sanitized public bundle for RH v3.1.
 - `audit/v3.1_dependency_report.md`
 - `audit/v3.1_consistency_guard.md`
 - `audit/v3.1_cs2_target_line_audit.md`
+- `audit/v3.1_chain_mapping_status.md`
 
 ## Formalization artifacts
 
