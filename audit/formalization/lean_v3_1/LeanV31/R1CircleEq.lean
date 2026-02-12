@@ -14,17 +14,14 @@ for fixed n and z in upper half-plane, boundary membership in the Weyl disk
 is equivalent to the quadratic-form circle equation. -/
 theorem R1_circle_eq
     {n : Nat} {z : Complex}
-    (_hz : InUpperB21 z)
-    (_hMembership :
-      R1MembershipIdentityAvailable n z) :
+    (hz : InUpperB21 z)
+    (hMembership :
+      R1MembershipIdentityAvailable n z)
+    (hBoundaryBridge :
+      InUpperB21 z ->
+      R1MembershipIdentityAvailable n z ->
+      forall m : Complex, OnWeylBoundary n z m <-> SatisfiesWeylCircleEq n z m) :
     forall m : Complex, OnWeylBoundary n z m <-> SatisfiesWeylCircleEq n z m := by
-  intro m
-  exact Iff.intro
-    (fun h => by
-      rcases h with ⟨c0, hc0⟩
-      exact ⟨c0, hc0⟩)
-    (fun h => by
-      rcases h with ⟨c0, hc0⟩
-      exact ⟨c0, hc0⟩)
+  exact hBoundaryBridge hz hMembership
 
 end LeanV31

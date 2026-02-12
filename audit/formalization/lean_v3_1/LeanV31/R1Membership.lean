@@ -16,17 +16,22 @@ theorem R1_membership
     (hIdentityBridge :
       InUpperB21 z ->
       R1MembershipIdentityAvailable n z ->
-      forall m : Complex, R1MembershipIdentityAt n z m) :
+      forall m : Complex, R1MembershipIdentityAt n z m)
+    (hSignBridge :
+      (forall m : Complex, R1MembershipIdentityAt n z m) ->
+      forall m : Complex, R1DiskMembershipSignAgree n z m)
+    (hBoundaryBridge :
+      (forall m : Complex, R1MembershipIdentityAt n z m) ->
+      forall m : Complex, OnWeylBoundary n z m <-> SatisfiesWeylCircleEq n z m) :
     (forall m : Complex, R1MembershipIdentityAt n z m) /\
       (forall m : Complex, R1DiskMembershipSignAgree n z m) /\
       (forall m : Complex, OnWeylBoundary n z m <-> SatisfiesWeylCircleEq n z m) := by
   have hIdentity : forall m : Complex, R1MembershipIdentityAt n z m :=
     hIdentityBridge hz hMembershipInput
-  have hSign : forall m : Complex, R1DiskMembershipSignAgree n z m := by
-    intro m
-    exact (hIdentity m).symm
+  have hSign : forall m : Complex, R1DiskMembershipSignAgree n z m :=
+    hSignBridge hIdentity
   have hBoundary : forall m : Complex, OnWeylBoundary n z m <-> SatisfiesWeylCircleEq n z m :=
-    R1_circle_eq (n := n) (z := z) hz hMembershipInput
+    hBoundaryBridge hIdentity
   exact And.intro hIdentity (And.intro hSign hBoundary)
 
 end LeanV31

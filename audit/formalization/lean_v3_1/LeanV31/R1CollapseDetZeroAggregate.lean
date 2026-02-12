@@ -14,6 +14,8 @@ theorem R1_collapse_det_zero_aggregate
     {z : Complex}
     (hMassDiverges : R1TotalMassDivergesAt z)
     (hDetZero : R1AggregateDetZeroCriterionAt z)
+    (hDetEquiv :
+      R1RankOneAggregateCriterionAt z <-> R1AggregateDetZeroCriterionAt z)
     (hRankOneToPrefix :
       R1RankOneAggregateCriterionAt z ->
       R1PrefixMassBoundFromRank1AggregateAt z)
@@ -25,8 +27,7 @@ theorem R1_collapse_det_zero_aggregate
       R1GlobalCollapseFromRank1AggregateAt z ->
       R1CollapseDetZeroAggregateAt z) :
     R1CollapseDetZeroAggregateAt z := by
-  have hRankOne : R1RankOneAggregateCriterionAt z :=
-    (R1_rank1_aggregate_det_equiv (z := z)).mpr hDetZero
+  have hRankOne : R1RankOneAggregateCriterionAt z := hDetEquiv.mpr hDetZero
   have hPrefix : R1PrefixMassBoundFromRank1AggregateAt z := hRankOneToPrefix hRankOne
   have hGlobal : R1GlobalCollapseFromRank1AggregateAt z :=
     R1_collapse_rank1_aggregate (z := z) hMassDiverges hPrefix hRankOneCollapseBridge
