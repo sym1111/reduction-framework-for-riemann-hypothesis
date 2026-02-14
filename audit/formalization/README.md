@@ -1,7 +1,7 @@
 ﻿# Full Formalization (v3.1)
 
 This folder tracks full-paper formalization progress for
-`A_Reduction_Framework_RH_v3.1.tex`.
+`paper/v3.1/A_Reduction_Framework_RH.tex`.
 
 ## Goal
 
@@ -47,9 +47,9 @@ Move from partial helper checks to statement-level formalization coverage:
 3. regenerate summary:
    - `powershell -ExecutionPolicy Bypass -File audit/formalization/summarize_v3_1_statement_inventory.ps1`
 4. run base checker:
-   - `powershell -ExecutionPolicy Bypass -File audit/run_formal_checks.ps1 -TexFile c:/gp_work/수학/핵심증명/A_Reduction_Framework_RH_v3.1.tex -ReportPrefix v3.1`
+   - `powershell -ExecutionPolicy Bypass -File audit/run_formal_checks.ps1 -TexFile paper/v3.1/A_Reduction_Framework_RH.tex -ReportPrefix v3.1`
 5. run full gate (mathlib + base):
-   - `powershell -ExecutionPolicy Bypass -File audit/run_full_paper_formal_gate.ps1 -TexFile c:/gp_work/수학/핵심증명/A_Reduction_Framework_RH_v3.1.tex -ReportPrefix v3.1`
+   - `powershell -ExecutionPolicy Bypass -File audit/run_full_paper_formal_gate.ps1 -TexFile paper/v3.1/A_Reduction_Framework_RH.tex -ReportPrefix v3.1`
 6. log each completed statement step:
    - `powershell -ExecutionPolicy Bypass -File audit/formalization/log_formal_step.ps1 -StatementId S145 -Action "formalize core" -Status formalized -Artifact "audit/formalization/lean_v3_1/LeanV31/SchurLocalUpdates.lean" -Formula "alpha_{k+1}=S_k'(0)/(1-conj(alpha_k)alpha_k)" -Remaining "S146" -Benefit "coverage +1"`
 

@@ -8,9 +8,9 @@ diagnostic routes, and track only the mainline matching status.
 
 Paper labels (v3.1):
 
-- `prop:R1_classical_mass` (`A_Reduction_Framework_RH_v3.1.tex:4633`)
-- `prop:R1_classical_mass_applicability` (`A_Reduction_Framework_RH_v3.1.tex:4651`)
-- `thm:R1-limit-point` (`A_Reduction_Framework_RH_v3.1.tex:4672`)
+- `prop:R1_classical_mass` (`paper/v3.1/A_Reduction_Framework_RH.tex:4633`)
+- `prop:R1_classical_mass_applicability` (`paper/v3.1/A_Reduction_Framework_RH.tex:4651`)
+- `thm:R1-limit-point` (`paper/v3.1/A_Reduction_Framework_RH.tex:4672`)
 - RH closure references:
   - `thm:final_bridge_closed` (`...:899`)
   - `thm:RH_from_anchor` (`...:6403`)

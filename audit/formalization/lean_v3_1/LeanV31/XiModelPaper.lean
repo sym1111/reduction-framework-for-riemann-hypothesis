@@ -2,7 +2,7 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 
 namespace LeanV31
 
-/- Paper map (`A_Reduction_Framework_RH_v3.1.tex`, lines ~58, ~81, ~5003):
+/- Paper map (`paper/v3.1/A_Reduction_Framework_RH.tex`, lines ~58, ~81, ~5003):
 `f(z) = xi(1/2 + i z)` and
 `xi(s) = (1/2) * s * (s - 1) * pi^(-s/2) * Gamma(s/2) * zeta(s). -/
 noncomputable def xiInput (z : Complex) : Complex :=
