@@ -8,6 +8,13 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \hypersetup{breaklinks=true,colorlinks=false}
+\ifdefined\RHBuildSupp
+  \IfFileExists{xr-hyper.sty}{\usepackage{xr-hyper}}{\usepackage{xr}}
+  \let\RHorigbibcite\bibcite
+  \renewcommand{\bibcite}[2]{}
+  \externaldocument{A_Reduction_Framework_RH_core}
+  \let\bibcite\RHorigbibcite
+\fi
 \lstset{basicstyle=\ttfamily\small,breaklines=true,columns=fullflexible}
 \usepackage{enumitem}
 \usepackage{booktabs}
@@ -39,12 +46,20 @@
 \newcommand{\PS}{\succeq}
 
 \title{A Reduction Framework for the Riemann Hypothesis via Global $J$-Contractivity of a Limit-Point Canonical System Derived from $\xi$}
+\ifdefined\RHBuildSupp
+\title{A Reduction Framework for the Riemann Hypothesis via Global $J$-Contractivity of a Limit-Point Canonical System Derived from $\xi$ (Supplement)}
+\fi
 \author{Youngmin Shin}
 \date{February 2026 (v3.2 draft: explicit overlap pipeline)}
 
 
 % ===== Versioning / layout safety (v2.0) =====
 \newcommand{\ProgramVersion}{3.2}
+\ifdefined\RHBuildCore
+  \ifdefined\RHBuildSupp
+    \errmessage{Define only one build flag: \string\RHBuildCore or \string\RHBuildSupp}
+  \fi
+\fi
 \setlength{\emergencystretch}{3em}
 \sloppy
 \begin{document}
@@ -53,7 +68,12 @@
 \allowdisplaybreaks
 \maketitle
 
-\begin{abstract}We work with the completed xi--function and the associated $\xi$--model
+\begin{abstract}
+\ifdefined\RHBuildSupp
+This document is a supplement to \texttt{A\_Reduction\_Framework\_RH\_core}.
+It collects auxiliary modules (R2 bookkeeping/normal forms, A2 finite-section Toeplitz certificates, empirical/data snapshots, and local Schur diagnostics) that are not used in the logical implication chain to RH in the core document.
+\else
+We work with the completed xi--function and the associated $\xi$--model
 \[
 f(z)=\xi\Bigl(\tfrac12+i z\Bigr),\quad H(z)=-\frac{f'(z)}{f(z)},\quad W(z)=\frac{1+iH(z)}{1-iH(z)}.
 \]
@@ -71,9 +91,11 @@ With this passivity anchor established inside the paper, the circle--Hardy pole-
 and reverse compression yield that $W$ is holomorphic and Schur on $\mathbb{C}_+$, hence RH via $L^\ast$.
 
 Auxiliary computational material is included only as illustration and plays no role in the logical implication chain.
+\fi
 \end{abstract}
 
 
+\ifdefined\RHBuildSupp\else
 \section{Introduction and overview}\label{sec:main}\label{sec:intro}
 
 We work with the completed xi-function $\xi(s)$ and the associated $\xi$-model
@@ -251,7 +273,7 @@ Thus $H(0)=-f'(0)/f(0)=0$ and $W(0)=1$.
 We now outline a purely algebraic construction of a discrete canonical system realising
 the function $S(\lambda)=W(z(\lambda))$ which avoids any \emph{a priori} Schur/Herglotz assumptions on $S$.
 Here $z(\lambda)=t_0+i\eta\,\tfrac{1+\lambda}{1-\lambda}$ maps the unit disc $\DD$ biholomorphically onto
-the upper half--plane $\UHP$ (see \eqref{eq:R2_window_map}), and $W$ is defined from $f(z)=\xi(\tfrac12+i z)$
+the upper half--plane $\UHP$, and $W$ is defined from $f(z)=\xi(\tfrac12+i z)$
 via $H=-f'/f$ and $W=(1+iH)/(1-iH)$ as in \eqref{eq:W_def}.
 
 Before entering the discrete algebraic construction, we record two analytic inputs that play a central role in the
@@ -1443,6 +1465,38 @@ $R_0\in\mathrm{Aut}(\mathbb D)$ from $(u,v,p,q)$.
 This is the mathematically correct ``$1$-jet diagnostic'': it identifies the \emph{unique} residual
 value-space gauge $R_0$ that makes \eqref{eq:TI_R0} exact; existence is established in Theorem~\ref{thm:ID_unconditional}.
 
+\begin{lemma}[Uniqueness and explicit formula for $R_0$ from a $1$-jet]\label{lem:R0_jet_pinning}
+Let $S_{\mathrm{can}},S_{\mathrm{tgt}}:\DD\to\DD$ be holomorphic and suppose there exists $R_0\in\mathrm{Aut}(\DD)$ with
+$S_{\mathrm{tgt}}(\lambda)=R_0(S_{\mathrm{can}}(\lambda))$ for all $\lambda\in\DD$.
+Write
+\[
+u:=S_{\mathrm{can}}(0),\quad v:=S_{\mathrm{tgt}}(0),\quad p:=S'_{\mathrm{can}}(0),\quad q:=S'_{\mathrm{tgt}}(0),
+\qquad (p\neq 0).
+\]
+Define $\varphi_u(w):=(w-u)/(1-\overline u\,w)$ (so $\varphi_u(u)=0$). Then $R_0$ is uniquely determined by the $1$-jet
+$(u,p)\mapsto(v,q)$ and admits the explicit factorization
+\begin{equation}\label{eq:R0_jet_factorization}
+R_0
+=\varphi_{-v}\circ \rho_{e^{\ii\theta}}\circ \varphi_u,
+\end{equation}
+where the phase $e^{\ii\theta}\in U(1)$ is determined by
+\begin{equation}\label{eq:R0_jet_phase}
+e^{\ii\theta}
+=\frac{q}{p}\cdot\frac{1-|u|^2}{1-|v|^2}\in U(1).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Any $R_0\in\mathrm{Aut}(\DD)$ with $R_0(u)=v$ can be written as \eqref{eq:R0_jet_factorization} for some $e^{\ii\theta}\in U(1)$,
+since $\varphi_u$ sends $u\mapsto 0$ and $\varphi_{-v}$ sends $0\mapsto v$.
+Differentiating at $u$ gives
+\[
+R_0'(u)=(\varphi_{-v})'(0)\,e^{\ii\theta}\,\varphi_u'(u)=(1-|v|^2)\,e^{\ii\theta}\,\frac{1}{1-|u|^2}
+=e^{\ii\theta}\frac{1-|v|^2}{1-|u|^2}.
+\]
+By the chain rule, $q=S'_{\mathrm{tgt}}(0)=R_0'(u)\,p$, which yields \eqref{eq:R0_jet_phase}. This uniquely fixes $e^{\ii\theta}$,
+hence uniquely fixes $R_0$.
+\end{proof}
+
 \medskip
 \paragraph{Absorbing $R_0$ into the realization (no loss for Schur/Pick).}
 Postcomposition by $R_0\in\mathrm{Aut}(\mathbb D)$ preserves the Schur property: if $S$ is Schur, then
@@ -2087,9 +2141,9 @@ Define the induced disk map
 \[
 F(w;z):=C_{\mathrm{val}}\!\Bigl(M(z)\cdot C_{\mathrm{val}}^{-1}(w)\Bigr),\qquad w\in\DD,
 \]
-where $C_{\mathrm{val}}$ is the value Cayley map \eqref{eq:R2_cayley_locked} and $\cdot$ denotes the Möbius action
+where $C_{\mathrm{val}}(m):=\frac{m-\ii}{m+\ii}$ (with inverse $C_{\mathrm{val}}^{-1}(w)=\ii\,\frac{1+w}{1-w}$) and $\cdot$ denotes the M\"obius action
 of $2\times2$ matrices on $\widehat{\C}$.
-Then, as Möbius maps (i.e. in $\mathrm{PGL}(2,\C)$), $F(\,\cdot\,;z)$ is represented by the explicit matrix
+Then, as M\"obius maps (i.e. in $\mathrm{PGL}(2,\C)$), $F(\,\cdot\,;z)$ is represented by the explicit matrix
 \begin{equation}\label{eq:R1_step_disk_map_formula}
 F(w;z)\ \equiv\ \widehat F_{\alpha,z}\cdot w,
 \qquad
@@ -2122,7 +2176,7 @@ L(z)=I-\frac{z}{2}JH(\alpha)=
 -\frac{z}{2\Delta} & 1+\frac{z\alpha}{2\Delta}
 \end{pmatrix}.
 \]
-Represent the Cayley maps \eqref{eq:R2_cayley_locked} in $\mathrm{PGL}(2,\C)$ by
+Represent these Cayley maps in $\mathrm{PGL}(2,\C)$ by
 \[
 C_{\mathrm{val}}\ \leftrightarrow\ \begin{pmatrix}1&-\ii\\1&\ii\end{pmatrix},
 \qquad
@@ -2160,7 +2214,11 @@ In this gauge the induced disk map $F(\,\cdot\,;z)$ depends on $z$ and is not no
 This is why we do \emph{not} appeal to the classical Schur one-step form to obtain denominator control:
 the remaining issue is genuinely the quantitative separation of the explicit denominators
 $|c_{\alpha_k,z}w_{k,n}(z)+d_{\alpha_k,z}|$, isolated in Definition~\ref{def:R1_denom_sep}.
+\ifdefined\RHBuildCore
+The standard Schur step is recalled in the supplementary module R2 as a comparison normal form in $\mathrm{Aut}(\DD)$ and for cocycle bookkeeping,
+\else
 The standard Schur step is recalled later (Section~\ref{sec:R2}) as a comparison normal form in $\mathrm{Aut}(\DD)$ and for cocycle bookkeeping,
+\fi
 not as a substitute for the R1 bottleneck.
 \end{remark}
 
@@ -5120,6 +5178,9 @@ Theorem~\ref{thm:R1-limit-point} holds.
 $\operatorname{tr}(H_k)=(1+|\alpha_k|^2)/(1-|\alpha_k|^2)\ge 1$.
 \end{proof}
 
+\fi % RHBuildSupp
+
+\ifdefined\RHBuildCore\else
 \section{R2: Dynamic equilibrium of the Schur--canonical cocycle (holonomy + leakage)}\label{sec:R2}
 
 This section pins down the \emph{algebraic} content needed in R2.
@@ -5587,39 +5648,7 @@ converges absolutely up to a harmless choice of branch, and \eqref{eq:gyro_tail_
 \paragraph{Analytic pinning of $R_0$ from a $1$-jet.}
 The preceding lemmas explain why ``rotation'' effects can concentrate at the head when the tail has small amplitude.
 Independently, the global calibration $R_0$ can be pinned \emph{deterministically} by an initial value and one derivative
-(= a first jet), without any multi-point fitting.
-
-\begin{lemma}[Uniqueness and explicit formula for $R_0$ from a $1$-jet]\label{lem:R0_jet_pinning}
-Let $S_{\mathrm{can}},S_{\mathrm{tgt}}:\DD\to\DD$ be holomorphic and suppose there exists $R_0\in\mathrm{Aut}(\DD)$ with
-$S_{\mathrm{tgt}}(\lambda)=R_0(S_{\mathrm{can}}(\lambda))$ for all $\lambda\in\DD$.
-Write
-\[
-u:=S_{\mathrm{can}}(0),\quad v:=S_{\mathrm{tgt}}(0),\quad p:=S'_{\mathrm{can}}(0),\quad q:=S'_{\mathrm{tgt}}(0),
-\qquad (p\neq 0).
-\]
-Define $\varphi_u(w):=(w-u)/(1-\overline u\,w)$ (so $\varphi_u(u)=0$). Then $R_0$ is uniquely determined by the $1$-jet
-$(u,p)\mapsto(v,q)$ and admits the explicit factorization
-\begin{equation}\label{eq:R0_jet_factorization}
-R_0
-=\varphi_{-v}\circ \rho_{e^{\ii\theta}}\circ \varphi_u,
-\end{equation}
-where the phase $e^{\ii\theta}\in U(1)$ is determined by
-\begin{equation}\label{eq:R0_jet_phase}
-e^{\ii\theta}
-=\frac{q}{p}\cdot\frac{1-|u|^2}{1-|v|^2}\in U(1).
-\end{equation}
-\end{lemma}
-\begin{proof}
-Any $R_0\in\mathrm{Aut}(\DD)$ with $R_0(u)=v$ can be written as \eqref{eq:R0_jet_factorization} for some $e^{\ii\theta}\in U(1)$,
-since $\varphi_u$ sends $u\mapsto 0$ and $\varphi_{-v}$ sends $0\mapsto v$.
-Differentiating at $u$ gives
-\[
-R_0'(u)=(\varphi_{-v})'(0)\,e^{\ii\theta}\,\varphi_u'(u)=(1-|v|^2)\,e^{\ii\theta}\,\frac{1}{1-|u|^2}
-=e^{\ii\theta}\frac{1-|v|^2}{1-|u|^2}.
-\]
-By the chain rule, $q=S'_{\mathrm{tgt}}(0)=R_0'(u)\,p$, which yields \eqref{eq:R0_jet_phase}. This uniquely fixes $e^{\ii\theta}$,
-hence uniquely fixes $R_0$.
-\end{proof}
+(= a first jet), without any multi-point fitting; see Lemma~\ref{lem:R0_jet_pinning}.
 
 
 
@@ -5764,6 +5793,9 @@ c&=-0.9999494327013837+0.0021986884920096347\,i.
 Thus $|a_{59}-a_{159}|\sim 1.2\times 10^{-6}$, $|b_{59}-b_{159}|\sim 1.2\times 10^{-6}$, and $|c_{59}-c_{159}|\sim 4\times 10^{-8}$.
 This $k$-independence is consistent with a \emph{global} coordinate normalization (a fixed conjugacy), and it supports the paper's stance that step-comparison (optional) should be formulated via induced disk maps and a single global boundary calibration $R_0$.
 
+\fi % RHBuildCore
+
+\ifdefined\RHBuildSupp\else
 \section{Conclusion and outlook}\label{sec:outlook}
 
 
@@ -5785,13 +5817,20 @@ $\Im H\ge 0$ on $\C_+$ for $H=-f'/f$ and $f(z)=\xi(\tfrac12+iz)$, and therefore 
 
 \medskip
 \noindent\textbf{Outlook.}
+\ifdefined\RHBuildCore
+The supplementary document separates the auxiliary modules R2, A2, empirical/data snapshots, and local Schur diagnostics for reproducibility and stress-testing.
+\else
 The appendices collect the discrete canonical-system implementation details (R1/R2) and finite-section numerical certificates (A2),
 which are not needed for the logical closure but are useful for reproducibility and stress-testing.
+\fi
 
 
+
+\fi % RHBuildSupp
 
 \appendix
 
+\ifdefined\RHBuildCore\else
 \section{A2: finite-section Toeplitz contraction and a certified PSD lower bound}
 \noindent\textbf{(Not used in the logical chain.)}
 This section provides a finite-section certificate and numerical illustrations (``A2'') for the Schur/contractive behavior of the
@@ -6068,10 +6107,13 @@ $r$ & $\sum_{k<160}\Tr H_k$ & $\max_{k<160}\Tr H_k$ & mean $\Tr H_k$\\
 \end{center}
 
 
+\fi % RHBuildCore
+
 % ============================================================
 % Passivity anchor (Reis-style): existence of the xi canonical system and the energy identity
 % ============================================================
 
+\ifdefined\RHBuildSupp\else
 \section{Passivity anchor: constructing a limit-point canonical system for the $\xi$--model}
 \label{sec:passivity_anchor}
 
@@ -6812,6 +6854,9 @@ Finally, the $L^\ast$ package (Section~\ref{sec:Lstar}) provides the canonical-s
 
 
 
+\fi % RHBuildSupp
+
+\ifdefined\RHBuildCore\else
 \section{Diagnostic module: local Schur recursion expansions and trigger indices}\label{sec:diag_schur_local}
 
 This section is \emph{diagnostic only}: it records local Taylor expansions of the Schur recursion that explain the
@@ -6907,7 +6952,14 @@ $w_r(e^{it})=\Re\frac{1+S_r(e^{it})}{1-S_r(e^{it})}$, so small $\rho_j^2(r)$ cor
 
 
 
-\section{References (minimal)}\label{app:refs}
+\fi % RHBuildCore
+
+\section{References (minimal)}
+\ifdefined\RHBuildSupp
+\label{app:refs_supp}
+\else
+\label{app:refs}
+\fi
 
 \begin{thebibliography}{10}
 

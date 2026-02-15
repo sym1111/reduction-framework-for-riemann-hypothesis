@@ -5,8 +5,8 @@
   "npy_shape": [
     160
   ],
-  "lean_path": "audit\\formalization\\lean_v3_1\\LeanV32\\GoldenAlphaWitness.lean",
-  "lean_sha256": "e50a8310005bb35deb71fbef38a35e2a3e5780b3341783cea70a9a2d7085bf6d",
+  "lean_path": "audit\\formalization\\lean\\LeanV32\\GoldenAlphaWitness.lean",
+  "lean_sha256": "69894da1011a6581e4e343ac3bcfd7f6bd220e7a46155e404ee8c9cd5b0953d8",
   "parsed_complex_mk_count": 160,
   "expected_len": 160,
   "all_equal": true,

@@ -1,4 +1,4 @@
-# v3.2 Golden α provenance (LeanV32)
+﻿# v3.2 Golden α provenance (LeanV32)
 
 This folder pins down the **exact** 160-parameter golden Schur sequence used by the Lean v3.2 track,
 and provides a bitwise audit check that the committed `.npy` artifact matches the Lean literal in
@@ -16,10 +16,10 @@ and provides a bitwise audit check that the committed `.npy` artifact matches th
 1. Verify the `.npy` payload matches the Lean literal (bitwise IEEE-754):
    - `python audit/provenance/v32_golden_alpha/verify_golden_alpha_npy_matches_lean.py --json-out audit/provenance/v32_golden_alpha/golden_alpha_match_report.json`
 2. Build the Lean v3.2 chain + golden witness (strict):
-   - `cd audit/formalization/lean_v3_1`
+   - `cd audit/formalization/lean`
    - `lake --wfail build LeanV32.BuildAll`
 
 ## Expected SHA256
 - `.npy`: `f066d9e5368f59d8f60937c384b51a6754c51d61a9169734bd72ca838eb83792`
-- `GoldenAlphaWitness.lean`: `e50a8310005bb35deb71fbef38a35e2a3e5780b3341783cea70a9a2d7085bf6d`
+- `GoldenAlphaWitness.lean`: `69894da1011a6581e4e343ac3bcfd7f6bd220e7a46155e404ee8c9cd5b0953d8`
 

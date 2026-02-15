@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Audit-grade check: the stored golden `.npy` alpha artifact matches the Lean literal
@@ -78,7 +78,7 @@ def main() -> int:
     )
     ap.add_argument(
         "--lean",
-        default=r"audit/formalization/lean_v3_1/LeanV32/GoldenAlphaWitness.lean",
+        default=r"audit/formalization/lean/LeanV32/GoldenAlphaWitness.lean",
         help="Path to Lean file containing `goldenAlphaVec` literals.",
     )
     ap.add_argument(

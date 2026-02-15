@@ -1,0 +1,3 @@
+*.lean text eol=lf
+*.npy binary
+*.pdf binary
