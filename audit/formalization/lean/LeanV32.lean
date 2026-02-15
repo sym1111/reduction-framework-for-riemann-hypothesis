@@ -10,6 +10,7 @@ import LeanV32.OverlapCoordinate
 import LeanV32.OverlapDenomBound
 import LeanV32.TruncatedDiskCocycle
 import LeanV32.SchurJet
+import LeanV32.CircleHardy
 import LeanV32.AlphaRadiusBound
 import LeanV32.MathlibRHBridge
 import LeanV32.RHClosure
