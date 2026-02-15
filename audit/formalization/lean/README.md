@@ -2,6 +2,10 @@
 
 This is the Lake project for the v3.2 Lean track.
 
+For an auditable summary of what is proved vs what remains as an explicit hypothesis, see:
+
+- `PROOF_STATUS.md`
+
 ## Build (strict)
 
 From this folder:
