@@ -1,0 +1,14 @@
+{
+  "npy_path": "audit\\provenance\\v32_golden_alpha\\alphas_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.npy",
+  "npy_sha256": "f066d9e5368f59d8f60937c384b51a6754c51d61a9169734bd72ca838eb83792",
+  "npy_dtype": "complex128",
+  "npy_shape": [
+    160
+  ],
+  "lean_path": "audit\\formalization\\lean_v3_1\\LeanV32\\GoldenAlphaWitness.lean",
+  "lean_sha256": "e50a8310005bb35deb71fbef38a35e2a3e5780b3341783cea70a9a2d7085bf6d",
+  "parsed_complex_mk_count": 160,
+  "expected_len": 160,
+  "all_equal": true,
+  "first_mismatch": null
+}

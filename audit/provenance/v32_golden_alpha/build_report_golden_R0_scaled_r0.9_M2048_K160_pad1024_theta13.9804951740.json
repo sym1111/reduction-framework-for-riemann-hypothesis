@@ -1,0 +1,28 @@
+{
+  "svals_npy": "C:\\gp_work\\수학\\out\\out_N80\\Svals_t0_109.099073_eta_0.12_r_0.9_M_2048_N_80_dps_80.npy",
+  "r": 0.9,
+  "M": 2048,
+  "series_mode": "scaled",
+  "K_requested": 160,
+  "K_built": 160,
+  "pad": 1024,
+  "theta_deg": 13.980495174,
+  "mobius_used": true,
+  "mobius_a": "0.16459943079112785+0.9759713935563084j",
+  "mobius_k": "0.06396375824179397-0.9979522221186671j",
+  "first_bad_alpha": null,
+  "max_abs_alpha": 0.9646194576537186,
+  "hk_stats": {
+    "min_eig_min": 1.6352550115499714e-21,
+    "min_eig_med": 1.8997826324249383e-13,
+    "det_min": 1.6352550115499679e-21,
+    "det_med": 1.8997826324292055e-13,
+    "det_max": 31.08063513503336,
+    "count_neg_min_eig": 0
+  },
+  "paths": {
+    "alphas_npy": "C:\\gp_work\\수학\\out\\golden\\alphas_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.npy",
+    "alphas_csv": "C:\\gp_work\\수학\\out\\golden\\alphas_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.csv",
+    "hk_npy": "C:\\gp_work\\수학\\out\\golden\\hamiltonian_Hk_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.npy"
+  }
+}

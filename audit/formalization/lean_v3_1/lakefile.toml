@@ -13,3 +13,6 @@ rev = "v4.27.0"
 
 [[lean_lib]]
 name = "LeanV31"
+
+[[lean_lib]]
+name = "LeanV32"

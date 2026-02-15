@@ -1,0 +1,23 @@
+==================================================================================================
+[verify_r2_internal_schur_v5_new_patched]
+svals   : ..\out\out_N80\Svals_t0_109.099073_eta_0.12_r_0.9_M_2048_N_80_dps_80.npy
+hk      : ..\out\golden\hamiltonian_Hk_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.npy
+alphas  : ..\out\golden\alphas_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.npy
+hk_rep  : ..\out\golden\build_report_golden_R0_scaled_r0.9_M2048_K160_pad1024_theta13.9804951740.json
+(t0,eta,r)=(109.099073,0.12,0.9)  rho=0.9  M=2048
+Kuse=160  Ncoeff=672  nsamp=4096  seed=0
+canonical: cayley=alt(b=1.0), Jside=JH, prod=right, invert_each=True
+convs: lam_sign=1, zeta_sign=1, zeta_scale=1.0
+target pre-mobius applied: a=(0.16459943079112785+0.9759713935563084j), k=(0.06396375824179397-0.9979522221186671j)
+--------------------------------------------------------------------------------------------------
+A) alpha-Schur vs target(FFT)   stats: {'count': 4096, 'max': 8.989818423714095e-16, 'mean': 1.4907847128925057e-16, 'median': 1.2412670766236366e-16, 'p90': 2.618455766672135e-16}
+B) canonical(Hk) vs target(FFT) stats: {'count': 4096, 'max': 0.33176615473425997, 'mean': 0.1442140607409511, 'median': 0.13346706462978553, 'p90': 0.2358416391413606}
+tol_alpha=1e-06 => PASS
+tol_hk   =0.01   => FAIL
+--------------------------------------------------------------------------------------------------
+[apply-aut] A(w)=exp(i*phi)*(w-a)/(1-conj(a)*w)
+[apply-aut] a = (-0.9990313692627192+0.04212179778532015j)
+[apply-aut] phi(rad) = 3.0728924217715075   (deg= 176.06376666524187 )
+B2) canonical(Hk) AFTER apply-aut stats: {'count': 4096, 'max': 0.0028694894266164733, 'mean': 0.0006802153372408818, 'median': 0.00027887369846279174, 'p90': 0.0019435287778986814}
+tol_hk=0.01 => PASS
+==================================================================================================
