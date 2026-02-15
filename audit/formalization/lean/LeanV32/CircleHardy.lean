@@ -75,6 +75,99 @@ theorem CircleHardyNoNegModes_fourierLp_of_nonneg (k : ℤ) (hk : 0 ≤ k) :
     simpa using hne
   simpa [hne'] using h
 
+/-! ### `P_-` and the negative-mode energy -/
+
+abbrev CircleCoeff :=
+  lp (fun _ : ℤ => ℂ) 2
+
+private def circleFourierBasis : HilbertBasis ℤ ℂ CircleL2 :=
+  fourierBasis (T := circleT) (hT := (by infer_instance))
+
+private def circleCoeffs (g : CircleL2) : CircleCoeff :=
+  circleFourierBasis.repr g
+
+private def circleNegCoeff (c : CircleCoeff) : CircleCoeff :=
+  ⟨fun i : ℤ => if i < 0 then c i else 0, by
+    -- `Memℓp` for the truncated coefficient sequence: dominated by the original `ℓ²` series.
+    have hp : 0 < (2 : ENNReal).toReal := by norm_num
+    have hsum : Summable (fun i : ℤ => ‖c i‖ ^ (2 : ENNReal).toReal) :=
+      (lp.memℓp c).summable hp
+    have hnonneg : ∀ i : ℤ, 0 ≤ ‖(if i < 0 then c i else 0)‖ ^ (2 : ENNReal).toReal := by
+      intro i
+      exact Real.rpow_nonneg (norm_nonneg _) _
+    have hle :
+        ∀ i : ℤ,
+          ‖(if i < 0 then c i else 0)‖ ^ (2 : ENNReal).toReal ≤ ‖c i‖ ^ (2 : ENNReal).toReal := by
+      intro i
+      by_cases hi : i < 0 <;> simp [hi]
+    refine memℓp_gen (p := (2 : ENNReal)) <|
+      (Summable.of_nonneg_of_le (f := fun i : ℤ => ‖c i‖ ^ (2 : ENNReal).toReal)
+        (g := fun i : ℤ => ‖(if i < 0 then c i else 0)‖ ^ (2 : ENNReal).toReal)
+        hnonneg hle hsum)⟩
+
+/-- The circle–Hardy negative-mode projection `P_- : L² → L²` (defined via Fourier coefficients). -/
+def CircleHardyProjNeg (g : CircleL2) : CircleL2 :=
+  circleFourierBasis.repr.symm (circleNegCoeff (circleCoeffs g))
+
+/-- Negative-mode energy `E_-(g) := ‖P_- g‖²`. -/
+def CircleHardyEnergyNeg (g : CircleL2) : ℝ :=
+  ‖CircleHardyProjNeg g‖ ^ 2
+
+theorem CircleHardyProjNeg_eq_zero_iff (g : CircleL2) :
+    CircleHardyProjNeg g = 0 ↔ CircleHardyNoNegModes g := by
+  constructor
+  · intro hP
+    -- Push `P_- g = 0` to coefficients.
+    have hcoeff0 : circleNegCoeff (circleCoeffs g) = 0 := by
+      have := congrArg circleFourierBasis.repr hP
+      simpa [CircleHardyProjNeg, circleCoeffs] using this
+    intro n
+    have hneg : (Int.negSucc n : ℤ) < 0 := Int.negSucc_lt_zero n
+    have hcn : circleCoeffs g (Int.negSucc n) = 0 := by
+      have := congrArg (fun c : CircleCoeff => c (Int.negSucc n)) hcoeff0
+      simpa [circleNegCoeff, circleCoeffs, hneg] using this
+    -- Convert from `repr` to `fourierCoeff`.
+    have hrepr :
+        circleFourierBasis.repr g (Int.negSucc n) =
+          fourierCoeff (T := circleT) g (Int.negSucc n) := by
+      simpa [circleFourierBasis] using
+        (fourierBasis_repr (T := circleT) (hT := (by infer_instance)) (f := g) (i := Int.negSucc n))
+    have hFour : fourierCoeff (T := circleT) g (Int.negSucc n) = 0 := by
+      simpa [circleCoeffs, hrepr] using hcn
+    have : (Int.negSucc n : ℤ) = (- (n + 1 : ℤ)) := by simp [Int.negSucc_eq]
+    simpa [this] using hFour
+  · intro hNoNeg
+    -- Show the truncated coefficient sequence is identically zero.
+    have hcoeff0 : circleNegCoeff (circleCoeffs g) = 0 := by
+      ext i
+      by_cases hi : i < 0
+      · obtain ⟨n, rfl⟩ := Int.eq_negSucc_of_lt_zero hi
+        have hrepr :
+            circleFourierBasis.repr g (Int.negSucc n) =
+              fourierCoeff (T := circleT) g (Int.negSucc n) := by
+          simpa [circleFourierBasis] using
+            (fourierBasis_repr (T := circleT) (hT := (by infer_instance)) (f := g) (i := Int.negSucc n))
+        have hFour : fourierCoeff (T := circleT) g (Int.negSucc n) = 0 := by
+          have : (Int.negSucc n : ℤ) = (- (n + 1 : ℤ)) := by simp [Int.negSucc_eq]
+          simpa [this] using hNoNeg n
+        simp [circleNegCoeff, hi, circleCoeffs, hrepr, hFour]
+      · simp [circleNegCoeff, hi]
+    -- Coefficients are zero ⇒ projection is zero.
+    simpa [CircleHardyProjNeg, circleCoeffs, hcoeff0]
+
+theorem CircleHardyEnergyNeg_eq_zero_iff (g : CircleL2) :
+    CircleHardyEnergyNeg g = 0 ↔ CircleHardyNoNegModes g := by
+  constructor
+  · intro hE
+    have hnorm : ‖CircleHardyProjNeg g‖ = 0 := by
+      exact (sq_eq_zero_iff.mp hE)
+    have hP : CircleHardyProjNeg g = 0 := by
+      exact norm_eq_zero.mp hnorm
+    exact (CircleHardyProjNeg_eq_zero_iff g).1 hP
+  · intro hNoNeg
+    have hP : CircleHardyProjNeg g = 0 := (CircleHardyProjNeg_eq_zero_iff g).2 hNoNeg
+    simp [CircleHardyEnergyNeg, hP]
+
 end
 
 end LeanV32
