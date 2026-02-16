@@ -168,6 +168,62 @@ theorem CircleHardyEnergyNeg_eq_zero_iff (g : CircleL2) :
     have hP : CircleHardyProjNeg g = 0 := (CircleHardyProjNeg_eq_zero_iff g).2 hNoNeg
     simp [CircleHardyEnergyNeg, hP]
 
+private lemma circleCoeffs_apply (g : CircleL2) (i : ℤ) :
+    circleCoeffs g i = fourierCoeff (T := circleT) g i := by
+  simpa [circleCoeffs, circleFourierBasis] using
+    (fourierBasis_repr (T := circleT) (hT := (by infer_instance)) (f := g) (i := i))
+
+theorem CircleHardyProjNeg_fourierCoeff (g : CircleL2) (i : ℤ) :
+    fourierCoeff (T := circleT) (CircleHardyProjNeg g) i =
+      if i < 0 then fourierCoeff (T := circleT) g i else 0 := by
+  -- Unfold through the Hilbert-basis coefficient representation.
+  have hrepr : circleCoeffs (CircleHardyProjNeg g) i = circleNegCoeff (circleCoeffs g) i := by
+    simp [CircleHardyProjNeg, circleCoeffs]
+  -- Convert both sides from `repr` coefficients to `fourierCoeff`.
+  have hcoeffP :
+      circleCoeffs (CircleHardyProjNeg g) i = fourierCoeff (T := circleT) (CircleHardyProjNeg g) i := by
+    simpa [circleCoeffs, circleFourierBasis] using
+      (fourierBasis_repr (T := circleT) (hT := (by infer_instance)) (f := CircleHardyProjNeg g)
+        (i := i))
+  have hcoeffG :
+      circleCoeffs g i = fourierCoeff (T := circleT) g i := by
+    simpa using circleCoeffs_apply (g := g) (i := i)
+  -- Finish by rewriting the truncated coefficient function.
+  simp [circleNegCoeff, hcoeffG, hcoeffP] at hrepr
+  simpa using hrepr
+
+theorem CircleHardyEnergyNeg_eq_tsum_sq_fourierCoeff (g : CircleL2) :
+    CircleHardyEnergyNeg g =
+      ∑' i : ℤ, ‖if i < 0 then fourierCoeff (T := circleT) g i else 0‖ ^ 2 := by
+  classical
+  have hp : 0 < (2 : ENNReal).toReal := by norm_num
+  -- Move the norm computation to coefficient space using the isometry `repr`.
+  have hnorm :
+      ‖CircleHardyProjNeg g‖ = ‖circleNegCoeff (circleCoeffs g)‖ := by
+    simp [CircleHardyProjNeg]
+  -- Express the squared norm of the coefficient vector as a `tsum` of squared pointwise norms.
+  have htsum :
+      ‖circleNegCoeff (circleCoeffs g)‖ ^ (2 : ENNReal).toReal =
+        ∑' i : ℤ, ‖circleNegCoeff (circleCoeffs g) i‖ ^ (2 : ENNReal).toReal := by
+    exact lp.norm_rpow_eq_tsum (p := (2 : ENNReal)) hp (circleNegCoeff (circleCoeffs g))
+  -- Combine the isometry, the `lp` norm formula, and rewrite coefficients back to `fourierCoeff`.
+  have hpow : ‖circleNegCoeff (circleCoeffs g)‖ ^ 2 = ∑' i : ℤ, ‖circleNegCoeff (circleCoeffs g) i‖ ^ 2 := by
+    -- Convert nat-powers to `Real.rpow` at exponent 2, then apply `htsum`.
+    calc
+      ‖circleNegCoeff (circleCoeffs g)‖ ^ 2
+          = ‖circleNegCoeff (circleCoeffs g)‖ ^ (2 : ENNReal).toReal := by
+              norm_cast
+      _ = ∑' i : ℤ, ‖circleNegCoeff (circleCoeffs g) i‖ ^ (2 : ENNReal).toReal := htsum
+      _ = ∑' i : ℤ, ‖circleNegCoeff (circleCoeffs g) i‖ ^ 2 := by
+            norm_cast
+  -- Final simplification of the coefficient truncation and the `repr`-to-`fourierCoeff` bridge.
+  -- Rewrite the `CircleHardyProjNeg` norm to coefficient-space and apply `hpow`.
+  have :
+      CircleHardyEnergyNeg g = ∑' i : ℤ, ‖circleNegCoeff (circleCoeffs g) i‖ ^ 2 := by
+    simp [CircleHardyEnergyNeg, hnorm, hpow]
+  -- Expand the truncation and convert coefficients to `fourierCoeff`.
+  simpa [circleNegCoeff, circleCoeffs_apply] using this
+
 end
 
 end LeanV32
