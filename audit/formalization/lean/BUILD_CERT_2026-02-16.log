@@ -1,7 +1,7 @@
-build_cert_kind=lean_v3.2
-timestamp=2026-02-16T06:21:35.9867483+09:00
+﻿build_cert_kind=lean_v3.2
+timestamp=2026-02-16T09:22:37.9927642+09:00
 repo=https://github.com/sym1111/reduction-framework-for-riemann-hypothesis
-built_from_commit=f2c09641251177233d471279dd68306dfccf5bf1
+built_from_commit=d4fb44e2aa4255febf36436ee3b34b986919224a
 
 lean_toolchain=leanprover/lean4:v4.27.0
 mathlib_rev=v4.27.0
@@ -10,9 +10,7 @@ lean_version=Lean (version 4.27.0, x86_64-w64-windows-gnu, commit db93fe16085487
 
 command=cd audit/formalization/lean && lake --wfail build
 output_begin
-✔ [7900/7901] Built LeanV32 (46s)
-✔ [7901/7901] Built LeanV32.BuildAll (19s)
-Build completed successfully (7901 jobs).
+Build completed successfully (7904 jobs).
 output_end
 
 golden_alpha_match_report=audit/provenance/v32_golden_alpha/golden_alpha_match_report.json
@@ -20,4 +18,4 @@ golden_npy_sha256=f066d9e5368f59d8f60937c384b51a6754c51d61a9169734bd72ca838eb837
 golden_witness_sha256=69894da1011a6581e4e343ac3bcfd7f6bd220e7a46155e404ee8c9cd5b0953d8
 golden_all_equal=true
 
-note=Built at commit f2c0964; this plain-text cert is committed afterwards (no impact on build inputs).
+note=Built at commit d4fb44e; this plain-text cert is committed afterwards (no impact on build inputs).
